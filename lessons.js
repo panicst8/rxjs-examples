@@ -1,9 +1,4 @@
-// Example 3 -- Observable from Promise
+// Example 4 -- Observable Timer
 
-const promise = new Promise((resolve, reject) => {
-   setTimeout(() => {
-      resolve('resolved!');
-   }, 1000);
-});
-const obsvPromise = Rx.Observable.fromPromise(promise);
-obsvPromise.subscribe(result => console.log(result));
+const timer = Rx.Observable.timer(1000);
+timer.subscribe(done => console.log('ding!!!'));
