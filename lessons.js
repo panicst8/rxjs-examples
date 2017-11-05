@@ -1,8 +1,8 @@
-// Example 18 -- Scan - Keep a running total
+// Example 19 -- SwitchMap - Get value from Observable A, then emit Observable B
 
 const clicks = Rx.Observable.fromEvent(document, 'click');
 clicks
-   .map(e => Math.round(Math.random() * 100))
-   .do(score => print(`Current Score: ${score}`))
-   .scan((totalScore, current) => totalScore + current)
-   .subscribe(highScore => print(`High Score: ${highScore}`));
+   .switchMap(click => {
+      return Rx.Observable.interval(500);
+   })
+   .subscribe(i => print(i));
