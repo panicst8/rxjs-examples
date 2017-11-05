@@ -1,4 +1,4 @@
-// Example 7 -- Unsubscribe - Turn off the stream
+// Example 8 -- Cold Observable Example
 
 // Some Observables end on their own
 
@@ -22,8 +22,9 @@ interval.finally(() => print('I will never complete.')).subscribe(x => print(x))
 // You can turn off the stream by unsubscribing
 
 const subscription = interval
-   .finally(x => print('Second Subscribtion Complete.'))
+   .finally(x => print('Second Subscription Complete.'))
    .subscribe(x => print('2nd Subscription: ' + x));
+
 setTimeout(() => {
    subscription.unsubscribe();
 }, 4000);
