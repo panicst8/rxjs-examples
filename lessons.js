@@ -2,6 +2,7 @@
 
 const clicks = Rx.Observable.fromEvent(document, 'click');
 clicks
-   .map(e => Math.random() * 100)
+   .map(e => Math.round(Math.random() * 100))
+   .do(score => print(`Current Score: ${score}`))
    .scan((totalScore, current) => totalScore + current)
-   .subscribe(x => print(Math.round(x)));
+   .subscribe(highScore => print(`High Score: ${highScore}`));
