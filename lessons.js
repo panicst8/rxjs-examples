@@ -1,17 +1,11 @@
-// Example 13 -- Do - Just do it
+// Example 12 -- Map - Control the Emitted Values
 
-/*
+const jsonString = '{"type":"dog", "breed": "pug"}';
+const apiCall = Rx.Observable.of(jsonString);
 
- The do operator allows you to run code at any point in the
- Observable, without producing side effects on the emitted 
- values. This is handy for debugging or for any situation 
- where you want to run code outside of the Observable scope.
+apiCall.map(json => JSON.parse(json)).subscribe(obj => {
+   print(obj.type);
+   print(obj.breed);
+});
 
-*/
-
-const names = Rx.Observable.of('Simon', 'Garfunkle');
-names
-   .do(name => print(`original value: ${name}`))
-   .map(name => name.toUpperCase())
-   .do(name => print(`uppercase value: ${name}`))
-   .subscribe();
+// emit as JS object, rather than JSON string
