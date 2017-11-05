@@ -1,11 +1,5 @@
-// Example 12 -- Map - Control the Emitted Values
+// Example 14 -- Filter - Use only the Good Stuff
 
-const jsonString = '{"type":"dog", "breed": "pug"}';
-const apiCall = Rx.Observable.of(jsonString);
+const numbers = Rx.Observable.of(-3, 5, 7, 2, -7, 9, -2);
 
-apiCall.map(json => JSON.parse(json)).subscribe(obj => {
-   print(obj.type);
-   print(obj.breed);
-});
-
-// emit as JS object, rather than JSON string
+numbers.filter(num => num > 0).subscribe(n => print(n));
