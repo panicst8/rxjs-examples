@@ -1,4 +1,9 @@
-// Example 2 -- Observable from DOM Events
+// Example 3 -- Observable from Promise
 
-const clicks = Rx.Observable.fromEvent(document, 'click');
-clicks.subscribe(click => console.log(click));
+const promise = new Promise((resolve, reject) => {
+   setTimeout(() => {
+      resolve('resolved!');
+   }, 1000);
+});
+const obsvPromise = Rx.Observable.fromPromise(promise);
+obsvPromise.subscribe(result => console.log(result));
