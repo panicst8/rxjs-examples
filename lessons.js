@@ -1,9 +1,17 @@
-// Example 11 -- Map - Control the Emitted Values
+// Example 12 -- Do - Just do it
 
-const numbers = Rx.Observable.of(10, 100, 1000);
+/*
 
-numbers.map(num => Math.log(num)).subscribe(x => print(x.toFixed(1)));
+ The do operator allows you to run code at any point in the
+ Observable, without producing side effects on the emitted 
+ values. This is handy for debugging or for any situation 
+ where you want to run code outside of the Observable scope.
 
-// 2.3
-// 4.6
-// 6.9
+*/
+
+const names = Rx.Observable.of('Simon', 'Garfunkle');
+names
+   .do(name => print(`original value: ${name}`))
+   .map(name => name.toUpperCase())
+   .do(name => print(`uppercase value: ${name}`))
+   .subscribe();
