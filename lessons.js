@@ -1,15 +1,7 @@
-// Example 20 -- TakeUntil - Get values until you’re told not to
+// Example 21 -- TakeWhile - Get values while the conditions are right
 
-// this is a good way to provide an external control
-
-const interval = Rx.Observable.interval(500);
-const notifier = Rx.Observable.timer(2000);
-interval
-   .takeUntil(notifier)
-   .finally(() => print('Complete!'))
-   .subscribe(i => print(i));
-
-// 0
-// 1
-// 2
-// Complete!
+const names = Rx.Observable.of('Sharon', 'Sue', 'Sally', 'Steve');
+names
+   .takeWhile(name => name != 'Sally')
+   .finally(() => console.log('Complete! I found Sally'))
+   .subscribe(i => console.log(i));
