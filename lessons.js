@@ -1,10 +1,10 @@
-// Example 6 -- Observable of Static Values
+// Example 1
 
-const mashup = Rx.Observable.of('anything', ['you', 'want'], 23, true, { cool: 'stuff' });
-mashup.subscribe(val => console.log(val));
+const observable = Rx.Observable.create(observer => {
+   observer.next('hello');
+   observer.next('world');
+});
+observable.subscribe(val => print(val));
 
-// anything
-// you,want
-// 23
-// true
-// [object Object]
+// hello
+// world
