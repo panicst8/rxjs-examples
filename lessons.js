@@ -1,12 +1,7 @@
-// Example 17 -- throttle and debounce
+// Example 18 -- Scan - Keep a running total
 
-const mouseEvents = Rx.Observable.fromEvent(document, 'mousemove');
-mouseEvents.throttleTime(100).subscribe(x => console.log(`throttle -> ${x.clientX}, ${x.clientY}`));
-
-// MouseEvent<data>
-// take values every 10th of second...
-
-mouseEvents.debounceTime(1000).subscribe(x => console.log(`debounce -> ${x.clientX}, ${x.clientY}`));
-
-// wait 1 second without change before taking value
-// MouseEvent<data>
+const clicks = Rx.Observable.fromEvent(document, 'click');
+clicks
+   .map(e => Math.random() * 100)
+   .scan((totalScore, current) => totalScore + current)
+   .subscribe(x => print(Math.round(x)));
