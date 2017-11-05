@@ -1,5 +1,5 @@
-// Example 14 -- Filter - Use only the Good Stuff
+// Example 15 -- first() operator
 
 const numbers = Rx.Observable.of(-3, 5, 7, 2, -7, 9, -2);
 
-numbers.filter(num => num > 0).subscribe(n => print(n));
+numbers.first().subscribe(n => print(n));
