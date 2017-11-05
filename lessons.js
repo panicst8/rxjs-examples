@@ -1,8 +1,4 @@
-// Example 1
+// Example 2 -- Observable from DOM Events
 
-const observable = Rx.Observable.create(observer => {
-   observer.next('hello');
-   observer.next('world');
-});
-
-observable.subscribe(val => console.log(val));
+const clicks = Rx.Observable.fromEvent(document, 'click');
+clicks.subscribe(click => console.log(click));
