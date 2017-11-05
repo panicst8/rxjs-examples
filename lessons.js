@@ -1,25 +1,9 @@
-// Example 10 -- Converting Cold Observable to Hot
+// Example 11 -- Map - Control the Emitted Values
 
-/*
+const numbers = Rx.Observable.of(10, 100, 1000);
 
- But how do we make an already cold observable hot? We can
- make a cold Observable hot by simply calling publish() on
- it. This will allow the subscribers to share the same values
- in realtime. To make it start emitting values, you call connect()
- after the subscription has started.
+numbers.map(num => Math.log(num)).subscribe(x => print(x.toFixed(1)));
 
-*/
-
-const cold = Rx.Observable.create(observer => {
-   observer.next(Math.random());
-});
-
-const hot = cold.publish();
-
-hot.subscribe(a => print(`Subscriber A: ${a}`));
-hot.subscribe(b => print(`Subscriber B: ${b}`));
-
-hot.connect();
-
-/// Subscriber A: 0.7122882102
-/// Subscriber B: 0.7122882102
+// 2.3
+// 4.6
+// 6.9
