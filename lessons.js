@@ -1,11 +1,13 @@
-// Example 7 -- Cold Observable Example
+// Example 9 -- Hot Observable Example
 
-const cold = Rx.Observable.create(observer => {
-   observer.next(Math.random());
+const x = Math.random();
+
+const hot = Rx.Observable.create(observer => {
+   observer.next(x);
 });
 
-cold.subscribe(a => print(`Subscriber A: ${a}`));
-cold.subscribe(b => print(`Subscriber B: ${b}`));
+hot.subscribe(a => print(`Subscriber A: ${a}`));
+hot.subscribe(b => print(`Subscriber B: ${b}`));
 
-// Subscriber A: 0.2298339030
-// Subscriber B: 0.9720023832
+// Subscriber A: 0.312580103
+// Subscriber B: 0.312580103
