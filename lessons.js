@@ -1,8 +1,10 @@
-// Example 5 -- Observable Time Interval
+// Example 6 -- Observable of Static Values
 
-const interval = Rx.Observable.interval(1000);
-interval.subscribe(i => print(i));
+const mashup = Rx.Observable.of('anything', ['you', 'want'], 23, true, { cool: 'stuff' });
+mashup.subscribe(val => print(val));
 
-// 0
-// 1
-// every second for eternity...
+// anything
+// you,want
+// 23
+// true
+// [object Object]
