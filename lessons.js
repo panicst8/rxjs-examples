@@ -1,35 +1,11 @@
-// Example 7 -- Unsubscribe - Turn off the stream
+// Example 7 -- Cold Observable Example
 
-// Some Observables end on their own
+const cold = Rx.Observable.create(observer => {
+   observer.next(Math.random());
+});
 
-const timer = Rx.Observable.timer(2000);
+cold.subscribe(a => print(`Subscriber A: ${a}`));
+cold.subscribe(b => print(`Subscriber B: ${b}`));
 
-timer.finally(() => print('Timer Complete.')).subscribe();
-
-// wait 2 seconds...
-// Timer Complete.
-
-// Some Observables will run forever
-
-const interval = Rx.Observable.interval(1000);
-
-interval.finally(() => print('I will never complete.')).subscribe(x => print(x));
-
-// 0
-// 1
-// and so on...
-
-// You can turn off the stream by unsubscribing
-
-const subscription = interval
-   .finally(x => print('Second Subscribtion Complete.'))
-   .subscribe(x => print('2nd Subscription: ' + x));
-setTimeout(() => {
-   subscription.unsubscribe();
-}, 4000);
-
-// 2nd Subscription: 0
-// 2nd Subscription: 1
-// 2nd Subscription: 2
-
-// Second Subscription Complete.
+// Subscriber A: 0.2298339030
+// Subscriber B: 0.9720023832
