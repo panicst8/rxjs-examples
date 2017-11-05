@@ -1,5 +1,12 @@
-// Example 16 -- last() operator
+// Example 17 -- throttle and debounce
 
-const numbers = Rx.Observable.of(-3, 5, 7, 2, -7, 9, -2);
+const mouseEvents = Rx.Observable.fromEvent(document, 'mousemove');
+mouseEvents.throttleTime(100).subscribe(x => console.log(`throttle -> ${x.clientX}, ${x.clientY}`));
 
-numbers.last().subscribe(n => print(n));
+// MouseEvent<data>
+// take values every 10th of second...
+
+mouseEvents.debounceTime(1000).subscribe(x => console.log(`debounce -> ${x.clientX}, ${x.clientY}`));
+
+// wait 1 second without change before taking value
+// MouseEvent<data>
