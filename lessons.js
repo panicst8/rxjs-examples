@@ -1,20 +1,28 @@
-// Example 32 -- Multicast - Share values, not side effects
+// Example 33 -- Share - Share observable among multiple subscribers
 
-const observable = Rx.Observable.fromEvent(document, 'click');
+//emit value in 1s
+const source = Rx.Observable.timer(1000);
+//log side effect, emit result
+const example = source.do(() => console.log('***SIDE EFFECT***')).mapTo('***RESULT***');
+/*
+  ***NOT SHARED, SIDE EFFECT WILL BE EXECUTED TWICE***
+  output: 
+  "***SIDE EFFECT***"
+  "***RESULT***"
+  "***SIDE EFFECT***"
+  "***RESULT***"
+*/
+const subscribe = example.subscribe(val => console.log(val));
+const subscribeTwo = example.subscribe(val => console.log(val));
 
-const clicks = observable.do(_ => print('SIDE EFFECT!!'));
-
-const subject = clicks.multicast(() => new Rx.Subject());
-
-const subA = subject.subscribe(c => print(`Sub A: ${c.timeStamp}`));
-const subB = subject.subscribe(c => print(`Sub B: ${c.timeStamp}`));
-
-subject.connect();
-
-// SIDE EFFECT!!
-// Sub A: 2687.62
-// Sub B: 2687.62
-
-// SIDE EFFECT!!
-// Sub A: 4295.11
-// Sub B: 4295.11
+//share observable among subscribers
+const sharedExample = example.share();
+/*
+  ***SHARED, SIDE EFFECT EXECUTED ONCE***
+  output: 
+  "***SIDE EFFECT***"
+  "***RESULT***"
+  "***RESULT***"
+*/
+const subscribeThree = sharedExample.subscribe(val => console.log(val));
+const subscribeFour = sharedExample.subscribe(val => console.log(val));
