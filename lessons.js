@@ -1,14 +1,16 @@
-// Example 23 -- Zip - Combine in unison
+// Example 24 -- ForkJoin - Merge, wait for completion, emit last values together
 
-// Zip works well when you have complimentary Observables that
-// you know have an equal number of values. It will combine the
-// values by index location and emit them as a combined array
+// The forkJoin() operator is commonly used to combine multiple
+// Promises that must all be resolved before sending data to the UI.
 
-const yin = Rx.Observable.of('peanut butter', 'wine', 'rainbows');
-const yang = Rx.Observable.of('jelly', 'cheese', 'unicorns');
-const combo = Rx.Observable.zip(yin, yang);
+let yin = Rx.Observable.of('peanut butter', 'wine', 'rainbows');
+let yang = Rx.Observable.of('jelly', 'cheese', 'unicorns');
+
+yang = yang.delay(2000);
+
+const combo = Rx.Observable.forkJoin(yin, yang);
+
 combo.subscribe(arr => console.log(arr));
 
-// peanut butter, jelly
-// wine, cheese
+// wait 2 seconds...
 // rainbows, unicorns
