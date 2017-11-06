@@ -1,4 +1,4 @@
-// Example 25 -- Catch - Handle errors gracefully
+// Example 26 -- Retry - Never give up
 
 const observable = Rx.Observable.create(observer => {
    observer.next('good');
@@ -8,9 +8,14 @@ const observable = Rx.Observable.create(observer => {
    observer.next('wonderful');
 });
 
-observable.catch(err => print(`Error caught: ${err}`)).subscribe(val => console.log(val));
+observable
+   .catch(err => print(`Error caught: ${err}`))
+   .retry(2)
+   .subscribe(val => console.log(val));
 
 // good
 // great
 // grand
+// Error caught: catch me!
+// Error caught: catch me!
 // Error caught: catch me!
