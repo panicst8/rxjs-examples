@@ -1,18 +1,9 @@
-// Example 27 -- Subject - An Observable that talks to subscribers
+// Example 28 -- BehaviorSubject - holds one value. When it is subscribed
+//               it emits the value immediately. A Subject doesn't hold
+//               a value.
 
-const subject = new Rx.Subject();
+const subject = new Rx.BehaviorSubject('initial value');
 
-const subA = subject.subscribe(val => print(`Sub A: ${val}`));
-const subB = subject.subscribe(val => print(`Sub B: ${val}`));
+subject.subscribe(x => console.log(x));
 
-subject.next('Hello');
-
-// Sub A: Hello
-// Sub B: Hello
-
-setTimeout(() => {
-   subject.next('World');
-}, 1000);
-
-// Sub A: World
-// Sub B: World
+subject.next('next value');
