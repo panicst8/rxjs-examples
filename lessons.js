@@ -1,16 +1,20 @@
-// Example 31 Race - take the first observable to emit
+// Example 32 -- Multicast - Share values, not side effects
 
-const example = Rx.Observable.race(
-   //emit every 1.5s
-   Rx.Observable.interval(1500),
-   //emit every 1s
-   Rx.Observable.interval(1000).mapTo('1s won!'),
-   //emit every 2s
-   Rx.Observable.interval(2000),
-   //emit every 2.5s
-   Rx.Observable.interval(2500),
-);
+const observable = Rx.Observable.fromEvent(document, 'click');
 
-const subscribe = example.take(1).subscribe(val => console.log(val));
+const clicks = observable.do(_ => print('SIDE EFFECT!!'));
 
-// output: "1s won!"
+const subject = clicks.multicast(() => new Rx.Subject());
+
+const subA = subject.subscribe(c => print(`Sub A: ${c.timeStamp}`));
+const subB = subject.subscribe(c => print(`Sub B: ${c.timeStamp}`));
+
+subject.connect();
+
+// SIDE EFFECT!!
+// Sub A: 2687.62
+// Sub B: 2687.62
+
+// SIDE EFFECT!!
+// Sub A: 4295.11
+// Sub B: 4295.11
