@@ -1,16 +1,21 @@
-// Example 31 Race - take the first observable to emit
+// Example 30 -- Pluck - Pick out nested properties
 
-const example = Rx.Observable.race(
-   //emit every 1.5s
-   Rx.Observable.interval(1500),
-   //emit every 1s
-   Rx.Observable.interval(1000).mapTo('1s won!'),
-   //emit every 2s
-   Rx.Observable.interval(2000),
-   //emit every 2.5s
-   Rx.Observable.interval(2500),
-);
+const source = Rx.Observable.from([{ name: 'Joe', age: 30 }, { name: 'Sarah', age: 35 }]);
 
-const subscribe = example.take(1).subscribe(val => console.log(val));
+//grab names
+const example = source.pluck('name');
 
-// output: "1s won!"
+//output: "Joe", "Sarah"
+const subscribe = example.subscribe(val => console.log(val));
+
+const sourceTwo = Rx.Observable.from([
+   { name: 'Joe', age: 30, job: { title: 'Developer', language: 'JavaScript' } },
+   //will return undefined when no job is found
+   { name: 'Sarah', age: 35 },
+]);
+
+//grab title property under job
+const exampleTwo = sourceTwo.pluck('job', 'title');
+
+//output: "Developer" , undefined
+const subscribeTwo = exampleTwo.subscribe(val => console.log(val));
