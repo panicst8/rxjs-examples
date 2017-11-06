@@ -1,9 +1,8 @@
-// Example 28 -- BehaviorSubject - holds one value. When it is subscribed
-//               it emits the value immediately. A Subject doesn't hold
-//               a value.
+// Example 29 -- distinctUntilChanged - only output distinct values,
+//               based on the last emitted value
 
-const subject = new Rx.BehaviorSubject('initial value');
+const myArrayWithDuplicatesInARow = Rx.Observable.from([1, 1, 2, 2, 3, 1, 2, 3]);
 
-subject.subscribe(x => console.log(x));
-
-subject.next('next value');
+const distinctSub = myArrayWithDuplicatesInARow
+   .distinctUntilChanged()
+   .subscribe(val => print(`Distinct Sub: ${val}`));
