@@ -1,21 +1,18 @@
-// Example 26 -- Retry - Never give up
+// Example 27 -- Subject - An Observable that talks to subscribers
 
-const observable = Rx.Observable.create(observer => {
-   observer.next('good');
-   observer.next('great');
-   observer.next('grand');
-   throw 'catch me!';
-   observer.next('wonderful');
-});
+const subject = new Rx.Subject();
 
-observable
-   .catch(err => print(`Error caught: ${err}`))
-   .retry(2)
-   .subscribe(val => console.log(val));
+const subA = subject.subscribe(val => print(`Sub A: ${val}`));
+const subB = subject.subscribe(val => print(`Sub B: ${val}`));
 
-// good
-// great
-// grand
-// Error caught: catch me!
-// Error caught: catch me!
-// Error caught: catch me!
+subject.next('Hello');
+
+// Sub A: Hello
+// Sub B: Hello
+
+setTimeout(() => {
+   subject.next('World');
+}, 1000);
+
+// Sub A: World
+// Sub B: World
