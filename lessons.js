@@ -1,8 +1,21 @@
-// Example 29 -- distinctUntilChanged - only output distinct values,
-//               based on the last emitted value
+// Example 30 -- Pluck - Pick out nested properties
 
-const myArrayWithDuplicatesInARow = Rx.Observable.from([1, 1, 2, 2, 3, 1, 2, 3]);
+const source = Rx.Observable.from([{ name: 'Joe', age: 30 }, { name: 'Sarah', age: 35 }]);
 
-const distinctSub = myArrayWithDuplicatesInARow
-   .distinctUntilChanged()
-   .subscribe(val => print(`Distinct Sub: ${val}`));
+//grab names
+const example = source.pluck('name');
+
+//output: "Joe", "Sarah"
+const subscribe = example.subscribe(val => console.log(val));
+
+const sourceTwo = Rx.Observable.from([
+   { name: 'Joe', age: 30, job: { title: 'Developer', language: 'JavaScript' } },
+   //will return undefined when no job is found
+   { name: 'Sarah', age: 35 },
+]);
+
+//grab title property under job
+const exampleTwo = sourceTwo.pluck('job', 'title');
+
+//output: "Developer" , undefined
+const subscribeTwo = exampleTwo.subscribe(val => console.log(val));
